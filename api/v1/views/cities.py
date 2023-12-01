@@ -54,7 +54,7 @@ def post_city(state_id):
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
-    req['sate_id'] = state_id
+    req['state_id'] = state_id
     city = City(**req)
     city.save()
     return (jsonify(city.to_dict()), 201)
