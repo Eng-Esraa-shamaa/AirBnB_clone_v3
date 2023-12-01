@@ -9,7 +9,7 @@ from models.state import State
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
-    """get state information for all states"""
+    """Retrieves all states"""
     states = []
     for state in storage.all("State").values():
         states.append(state.to_dict())
@@ -19,7 +19,7 @@ def get_states():
 @app_views.route('/states/<string:state_id>', methods=['GET'],
                  strict_slashes=False)
 def get_state(state_id):
-    """get state information for specified state"""
+    """Retrieves a state by id"""
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
@@ -29,7 +29,7 @@ def get_state(state_id):
 @app_views.route('/states/<string:state_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_state(state_id):
-    """deletes a state based on its state_id"""
+    """eletes a state by idd"""
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
@@ -41,11 +41,12 @@ def delete_state(state_id):
 @app_views.route('/states/', methods=['POST'], strict_slashes=False)
 def post_state():
     """create a new state"""
-    if not request.get_json():
+    req = request.get_json()
+    if not req:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    if 'name' not in request.get_json():
+    if 'name' not in req:
         return make_response(jsonify({'error': 'Missing name'}), 400)
-    state = State(**request.get_json())
+    state = State(**req.get_json())
     state.save()
     return make_response(jsonify(state.to_dict()), 201)
 
@@ -54,13 +55,14 @@ def post_state():
                  strict_slashes=False)
 def put_state(state_id):
     """update a state"""
+    req = request.get_json()
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
-    if not request.get_json():
+    if not req():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    for attr, val in request.get_json().items():
-        if attr not in ['id', 'created_at', 'updated_at']:
-            setattr(state, attr, val)
+    for key, value in req.items():
+        if key not in ['id', 'created_at', 'updated_at']:
+            setattr(state, key, value)
     state.save()
     return jsonify(state.to_dict())
