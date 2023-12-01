@@ -10,6 +10,7 @@ from models import amenity
 from models.base_model import BaseModel
 import pep8
 import unittest
+from sqlalchemy.orm.attributes import InstrumentedAttribute
 Amenity = amenity.Amenity
 
 
@@ -66,6 +67,22 @@ class TestAmenity(unittest.TestCase):
         self.assertTrue(hasattr(amenity, "id"))
         self.assertTrue(hasattr(amenity, "created_at"))
         self.assertTrue(hasattr(amenity, "updated_at"))
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "Testing DBStorage")
+    def test_name_attr(self):
+        """Test that Amenity has attribute name, and it's as an empty string"""
+        amenity = Amenity()
+        self.assertTrue(hasattr(amenity, "name"))
+        self.assertEqual(amenity.name, "")
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "Testing FileStorage")
+    def test_name_attr_db(self):
+        """Test for DBStorage name attribute"""
+        amenity = Amenity()
+        self.assertTrue(hasattr(Amenity, "name"))
+        self.assertIsInstance(Amenity.name, InstrumentedAttribute)
 
     def test_name_attr(self):
         """Test that Amenity has attribute name, and it's as an empty string"""
