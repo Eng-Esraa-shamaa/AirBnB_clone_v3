@@ -14,10 +14,12 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
 
+
 @app.teardown_appcontext
 def down_method(self):
     """ tear down method """
     storage.close()
+
 
 @app.errorhandler(404)
 def page_not_found(e):
