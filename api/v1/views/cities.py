@@ -2,10 +2,9 @@
 """view for City objects that handles all default RESTFul API actions"""
 
 from api.v1.views import app_views
-from flask import abort, jsonify, make_response, request
+from flask import abort, jsonify, request
 from models import storage
 from models.city import City
-from models.state import State
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
@@ -63,7 +62,7 @@ def post_city(state_id):
 
 @app_views.route('/states/<ities/<city_id>', methods=['PUT'],
                  strict_slashes=False)
-def post_city(city_id):
+def put_city(city_id):
     """updates a city"""
     req = request.get_json()
     if not req:
