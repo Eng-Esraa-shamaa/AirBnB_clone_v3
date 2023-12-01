@@ -2,10 +2,9 @@
 """view for review objects that handles all default RESTFul API actions"""
 
 from api.v1.views import app_views
-from flask import abort, jsonify,request
+from flask import abort, jsonify, request
 from models import storage
 from models.review import Review
-
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
@@ -76,9 +75,9 @@ def put_review(review_id):
     review = storage.get("Review", review_id)
     if review is None:
         abort(404)
-    for key, value in req:
+    for key, value in req.items():
         if key not in ['id', 'user_id', 'place_id',
-                        'created_at', 'updated_at']:
+                       'created_at', 'updated_at']:
             setattr(review, key, value)
     review.save()
     return jsonify(review.to_dict())
