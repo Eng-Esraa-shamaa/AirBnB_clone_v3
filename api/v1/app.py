@@ -15,6 +15,7 @@ app.url_map.strict_slashes = False
 CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
+
 @app.teardown_appcontext
 def tear_down(self):
     """closes the current SQLAlchemy Session"""
