@@ -68,34 +68,3 @@ def update_state(state_id):
     storage.save()
     return jsonify(state.to_json()), 200
 
-
-
-@app_views.route('/states', methods=['POST'])
-def create_state():
-    """creates a state"""
-    req = Request.get_json()
-    if not req:
-        return "Not a Json", 400
-    if 'name' not in req:
-        return "Missing name", 400
-    states = []
-    new = State(name=req)
-    storage.new(new)
-    storage.save()
-    states.append(new.to_dict())
-    return jsonify(states[0]), 201
-    
-
-@app_views.route('/states/<state_id>', methods=['PUT'])
-def update_state(state_id):
-    """updates a state"""
-    state = storage.get("Sate", state_id)
-    if not state:
-        abort(404, "State not found")
-    req = Request.get_json()
-    if req:
-        abort(400, 'Not a JSON')
-    for key, value in req.items():
-        setattr(state, key, value)
-    storage.save()
-    return jsonify(state.to_dict()), 200
