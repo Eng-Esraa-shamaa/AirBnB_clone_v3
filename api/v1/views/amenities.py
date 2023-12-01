@@ -49,7 +49,7 @@ def post_amenity():
         return jsonify({'error': 'Missing name'}), 400
     amenity = Amenity(**req)
     amenity.save()
-    return jsonify((amenity.to_dict()), 201)
+    return jsonify(amenity.to_dict()), 201
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'], 
