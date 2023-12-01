@@ -75,8 +75,8 @@ class FileStorage:
         or None if not found
         """
         all_obj = self.all(cls)
-        for c in all_obj.values():
-            if str(c.id) == id:
+        for i in all_obj.values():
+            if str(i.id) == id:
                 return c
         return None
 
