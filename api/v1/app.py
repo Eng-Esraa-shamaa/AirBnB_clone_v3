@@ -9,7 +9,7 @@ import os
 
 
 host = os.getenv('HBNB_API_HOST', '0.0.0.0')
-port = os.getenv('HBNB_API_PORT', 5000)
+port = os.getenv('HBNB_API_PORT', '5000')
 
 app = Flask(__name__)
 
