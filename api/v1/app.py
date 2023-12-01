@@ -2,7 +2,7 @@
 """
 Flask App
 """
-from flask import Flask, Blueprint, render_template
+from flask import Flask, Blueprint, render_template, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -19,6 +19,11 @@ app.register_blueprint(app_views)
 def tear_down():
     """closes the current SQLAlchemy Session"""
     storage.close()
+
+@app.errorhandler(404)
+def error_page():
+    """handles 404 errors"""
+    return (jsonify({"error": "Not Found"}))
 
 if __name__ == "__main__":
     app.run(host=host, port=port, debug=True)
