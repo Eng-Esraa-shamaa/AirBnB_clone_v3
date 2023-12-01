@@ -119,5 +119,6 @@ class TestFileStorage(unittest.TestCase):
         """
         test count method
         """
+        storage = FileStorage()
         t = storage.count(State)
         self.assertEqual(t, 1)

@@ -9,6 +9,7 @@ import models
 from models import amenity
 from models.base_model import BaseModel
 import pep8
+import os
 import unittest
 from sqlalchemy.orm.attributes import InstrumentedAttribute
 Amenity = amenity.Amenity
