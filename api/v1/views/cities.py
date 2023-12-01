@@ -16,7 +16,7 @@ def get_cities(state_id):
     if state is None:
         abort(404)
     cities = []
-    for city in storage.all("States"):
+    for city in state.cities:
         cities.append(city.to_dict())
     return jsonify(cities)
 
@@ -52,7 +52,7 @@ def post_city(state_id):
         return jsonify({'error': 'Not a JSON'}), 400
     if 'name' not in req:
         return jsonify({'error': 'Missing name'}), 400
-    state = storage.get("City", state_id)
+    state = storage.get("State", state_id)
     if state is None:
         abort(404)
     req['sate_id'] = state_id
