@@ -10,6 +10,7 @@ def status():
     """function that returns json represnation of status"""
     return (jsonify({'status': 'OK'}))
 
+
 @app_views.route('/stats', methods=['GET'])
 def stats():
     """retrieves number of each object by type"""
@@ -20,7 +21,7 @@ def stats():
         "Place": "places",
         "Review": "reviews",
         "State": "states",
-        "User": "users"       
+        "User": "users"    
     }
     for key, value in objs.items():
         res[value] = storage.count(key)
