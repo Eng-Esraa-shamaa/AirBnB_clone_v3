@@ -11,18 +11,18 @@ from api.v1.views import app_views
 app = Flask(__name__)
 
 app.register_blueprint(app_views)
-
+app.url_map.strict_slashes = False
 
 @app.teardown_appcontext
-def tear_down():
+def tear_down(self):
     """closes the current SQLAlchemy Session"""
     storage.close()
 
 
 @app.errorhandler(404)
-def error_page():
+def error_page(e):
     """handles 404 errors"""
-    return (jsonify({"error": "Not Found"}))
+    return jsonify({"error": "Not Found"}), 404
 
 
 if __name__ == "__main__":
