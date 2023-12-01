@@ -7,6 +7,7 @@ from models import storage
 from api.v1.views import app_views
 import os
 
+
 host = os.getenv('HBNB_API_HOST', '0.0.0.0')
 port = os.getenv('HBNB_API_PORT', 5000)
 
@@ -24,8 +25,8 @@ def tear_down():
 @app.errorhandler(404)
 def error_page():
     """handles 404 errors"""
-    return (jsonify({"error": "Not Found"}), 404)
+    return (jsonify({"error": "Not Found"}))
 
 
 if __name__ == "__main__":
-    app.run(host=host, port=port, threaded=True)
+    app.run(host=host, port=port, debug=True)
