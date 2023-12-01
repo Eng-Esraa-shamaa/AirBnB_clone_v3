@@ -2,7 +2,7 @@
 """view for users objects that handles all default RESTFul API actions"""
 
 from api.v1.views import app_views
-from flask import abort, jsonify, make_response, request
+from flask import abort, jsonify, request
 from models import storage
 from models.user import User
 
@@ -16,7 +16,7 @@ def get_users():
     return jsonify(users)
 
 
-@app_views.route('/users/user_id', methods=['GET'],
+@app_views.route('/users/<user_id>', methods=['GET'],
                  strict_slashes=False)
 def get_user(user_id):
     """Retrieves user with specified id"""
@@ -26,7 +26,7 @@ def get_user(user_id):
     return jsonify(user.to_dict())
 
 
-@app_views.route('/users/user_id', methods=['DELETE'],
+@app_views.route('/users/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_user(user_id):
     """deletes a user based on specified id"""
@@ -53,7 +53,7 @@ def post_user():
     return jsonify(user.to_dict()), 201
 
 
-@app_views.route('/users/user_id', methods=['PUT'],
+@app_views.route('/users/<user_id>', methods=['PUT'],
                  strict_slashes=False)
 def put_user(user_id):
     """updates a user"""
